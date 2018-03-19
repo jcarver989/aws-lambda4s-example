@@ -1,9 +1,6 @@
 
 package lambda4s.example
 
-import org.json4s.{ Formats, NoTypeHints }
-import org.json4s.native.Serialization
-
 import com.amazonaws.services.lambda.runtime.Context
 
 import lambda4s.{ Get, JSON, LambdaProxyFunction, Post, Request, Response }
@@ -11,13 +8,7 @@ import lambda4s.{ Get, JSON, LambdaProxyFunction, Post, Request, Response }
 case class User(firstName: String)
 case class Status(status: String)
 
-object JSONSupport extends JSON {
-  override implicit val formats: Formats = Serialization.formats(NoTypeHints)
-}
-
 class MainLambda() extends LambdaProxyFunction {
-  override protected val jsonSerializer = JSONSupport
-
   override def handle(request: Request, context: Context): Response = {
     logger.info(s"Request Recieved ${request}")
     request match {
