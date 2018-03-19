@@ -4,7 +4,7 @@
 
 This is a fully working example of an API built with AWS Lambda + API Gateway (proxy integration) written in Scala. It is built ontop of [aws-lambda4s](https://github.com/jcarver989/aws-lambda4s) which provides minimal boilerplate for making AWS Lamdba development pleasent in Scala. 
 
-## Why Should I Use This
+## Why Should I Use This?
 
 This will give you:
 
@@ -13,7 +13,7 @@ This will give you:
 - A complete CloudFormation template, which allows you to run your Lambda API locally & deploy it with a single command using AWS's `sam` CLI tool.
 - Logging is preconfigured for you using AWS Lambda's custom log4j2 appender
 
-## Getting Started
+## How Do I Get Started?
 
 1. Checkout this repo
 2. Install [SAM Local](https://github.com/awslabs/aws-sam-local)
