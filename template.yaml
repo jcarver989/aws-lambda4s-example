@@ -1,0 +1,126 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+
+  StageName:
+    Type: String
+    Default: dev
+    Description: The Lambda Function and API Gateway Stage
+
+  FunctionName:
+    Type: String
+    Default: example-lambda-function
+    Description: The name of the Lambda Function
+
+Resources:
+  Api:
+    Type: 'AWS::Serverless::Api'
+    Properties:
+      StageName: 
+        Ref: StageName
+
+      DefinitionBody:
+        swagger: "2.0"
+        info:
+          version: "1.0"
+          title: 
+            Fn::Sub: ${FunctionName}-${StageName}
+        paths:
+          /api/v1/{proxy+}:
+            x-amazon-apigateway-any-method:
+              responses: {}
+              x-amazon-apigateway-integration:
+                uri: 
+                  Fn::Sub: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ApiFunction.Alias}/invocations"
+                passthroughBehavior: "when_no_match"
+                httpMethod: POST
+                type: aws_proxy
+
+  ApiLambdaPermission:
+    DependsOn : ApiFunction
+    Type: "AWS::Lambda::Permission"
+    Properties:
+      Action: "lambda:InvokeFunction"
+      SourceArn: 
+        Fn::Sub: "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${Api}/*"
+      FunctionName: 
+        Fn::Sub:
+          - "${FuncArn}:current"
+          - { FuncArn: !GetAtt ApiFunction.Arn }
+      Principal: apigateway.amazonaws.com
+
+  ApiFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      AutoPublishAlias: current
+      FunctionName: 
+        Fn::Sub: "${FunctionName}-${StageName}"
+      Handler: lambda4s.example.MainLambda::handleRequest
+      Runtime: java8
+      CodeUri: ./target/scala-2.12/aws-lambda4s-example-assembly-1.0.jar
+      Timeout: 45
+      MemorySize: 1536
+      Policies:
+        - 
+          # Example of how you'd add IAM permissions to a DynamoDB table called "Users"
+          DynamoDBCrudPolicy:
+            TableName: Users
+
+      Events:
+        ProxyApi:
+          Type: Api
+          Properties:
+            Path: /api/v1/{proxy+}
+            Method: ANY
+            RestApiId: Api
+
+        # To make sam local work, we need to specify each route individually, see https://github.com/awslabs/aws-sam-local/issues/289
+        ApiPost:
+          Type: Api
+          Properties:
+            Path: /api/v1/{proxy+} 
+            Method: POST
+            RestApiId: Api
+
+        ApiGet:
+          Type: Api
+          Properties:
+            Path: /api/v1/{proxy+} 
+            Method: GET
+            RestApiId: Api
+
+        ApiOptions:
+          Type: Api
+          Properties:
+            Path: /api/v1/{proxy+} 
+            Method: OPTIONS
+            RestApiId: Api
+
+        ApiDelete:
+          Type: Api
+          Properties:
+            Path: /api/v1/{proxy+} 
+            Method: DELETE
+            RestApiId: Api
+
+        ApiPatch:
+          Type: Api
+          Properties:
+            Path: /api/v1/{proxy+} 
+            Method: PATCH
+            RestApiId: Api
+
+        ApiPut:
+          Type: Api
+          Properties:
+            Path: /api/v1/{proxy+} 
+            Method: PUT
+            RestApiId: Api
+
+      Environment:
+        Variables:
+          REGION: 
+            Ref: "AWS::Region"
+          STAGE: 
+            Ref: StageName
