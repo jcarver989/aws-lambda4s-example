@@ -1,14 +1,12 @@
 
 package lambda4s.example
 
-import com.amazonaws.services.lambda.runtime.Context
-import lambda4s.{ Get, JSON, LambdaProxyFunction, Post, Request, Response }
-import scala.reflect.ManifestFactory.classType
-import org.json4s.Formats
-import org.json4s.NoTypeHints
-import org.json4s.Serialization
+import org.json4s.{ Formats, NoTypeHints }
 import org.json4s.native.Serialization
-import org.json4s.Formats
+
+import com.amazonaws.services.lambda.runtime.Context
+
+import lambda4s.{ Get, JSON, LambdaProxyFunction, Post, Request, Response }
 
 case class User(firstName: String)
 case class Status(status: String)
