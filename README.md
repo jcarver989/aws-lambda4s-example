@@ -6,17 +6,21 @@ This is a fully working example of an API built with AWS Lambda + API Gateway (p
 
 ## Why Should I Use This?
 
-This will give you:
+By cloning this repo, you can get a fully working API using Lambda + API Gateway, that you can run locally in minutes.
 
-- Automatically convert AWS Lambda's JSON input/output to/from Scala case classes, making it easy for you to get going fast.
-- Super simple route matching, making it easy for you to match against request paths in your APIs
-- A complete CloudFormation template, which allows you to run your Lambda API locally & deploy it with a single command using AWS's `sam` CLI tool.
-- Logging is preconfigured for you using AWS Lambda's custom log4j2 appender
+More specifically, this repo gives you::
+
+- All the boilerplate you need to get started writing AWS Lambda functions in Scala
+- Automatic serialization of AWS Lambda's JSON input/output into nice Scala case classes
+- Logging, it's already setup for you using AWS Lambda's custom log4j2 appender
+- A complete CloudFormation template that allows you to run your Lambda locally or deploy it with a single command, using AWS's command line tools.
 
 ## How Do I Get Started?
 
-1. Checkout this repo
-2. Install [SAM Local](https://github.com/awslabs/aws-sam-local)
-3. Run `sam local start-api` to start the AWS lambda + API Gateway integration locally
-4. Run one of the test scripts, e.g. `./get-user-test.sh` or just `curl http://localhost:3000/path/to/your/api`
-5. Modify as for your own project as you wish.
+1. Clone this repo
+2. Install [the SAM cli tool](https://github.com/awslabs/aws-sam-local)
+3. Run `sbt assembly` to build your fat jar
+4. Run `sam local start-api` to start the AWS lambda + API Gateway integration locally
+5. Run one of the test scripts, e.g. `./get-user-test.sh` or just `curl http://localhost:3000/path/to/your/api`
+6. Modify as for your own project as you wish.
+7. When you're ready, deploy your project using sam, see [here](https://github.com/awslabs/aws-sam-local#package-and-deploy-to-lambda)
