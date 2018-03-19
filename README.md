@@ -1,4 +1,4 @@
-# Example For An AWS Lambda Function Written In Scala, Complete With CloudFormation & SAM Local Support
+# An Example API Using AWS Lambda + API Gateway Written In Scala
 
 ## What Is This?
 
