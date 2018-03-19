@@ -6,7 +6,7 @@ This is a fully working example of an API built with AWS Lambda + API Gateway (p
 
 ## Why Should I Use This?
 
-By cloning this repo, you can get a fully working API using Lambda + API Gateway, that you can run locally in minutes.
+By cloning this repo, you can get a fully working API using Lambda + API Gateway that you can run locally and deploy to AWS using a single command -  in minutes.
 
 More specifically, this repo gives you::
 
