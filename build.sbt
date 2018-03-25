@@ -7,7 +7,8 @@ mainClass in Compile := Some("lambda4s.example.MainLambda")
 
 
 // Scala
-libraryDependencies += "com.jcarver989" %% "aws-lambda4s" % "1.0"
+resolvers += Resolver.bintrayRepo("jcarver989", "maven")
+libraryDependencies += "com.jcarver989" %% "aws-lambda4s" % "1.0.0"
 
 // Test
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5" % "test"
